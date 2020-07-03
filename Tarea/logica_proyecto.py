@@ -21,19 +21,19 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def conexion_servidor(self):
-        if self.ui.conectar.text() == 'Conectar':
+        if self.ui.conectar.text() == 'CONECTAR':
             try:
                 self.cliente = s.socket()
-                self.cliente.connect((self.ui.ip.tex(), int(self.ui.puerto.text())))
-                self.ui.estado.setText('Conectado')
+                self.cliente.connect((self.ui.ip.text(), int(self.ui.puerto.text())))
+                #self.ui.estado.setText('Conectado')
                 self.ui.conectar.setText('Desconectar')
             except:
                 e = sys.exc_info()[1]
                 self.show_error(str(e))
-        elif self.ui.conectar.text() == 'Desconectar':
+        elif self.ui.conectar.text() == 'DESCONECTAR':
             self.cliente.close()
             self.ui.setText('Desconectado')
-            self.ui.conectar.setText('Conectar')
+            self.ui.conectar.setText('CONECTAR')
 
 
 
@@ -70,6 +70,8 @@ class MainWindow(QMainWindow):
     def buscarArchivo(self):
         filename = QFileDialog.getOpenFileName(self, 'Abrir archivo', '.', 'Image Files(*.txt)')
         file = open(filename[0], 'rb')
+        print(f'Variable File:{file}')
+
 
         count = 0
         size = 0
@@ -92,9 +94,9 @@ class MainWindow(QMainWindow):
             size += len(i)
             i = file.read(500)
 
-        msg = 'Finzip'
-        bytes = msg.encode()
-        self.cliente.send(bytes)
+        msg2 = 'Finzip'
+        bytes2 = msg2.encode()
+        self.cliente.send(bytes2)
 
         f2.close()
         file.close()
